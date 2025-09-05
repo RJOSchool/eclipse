@@ -7,7 +7,7 @@ class Moon:
         self.r = r
         self.sun = sun
         self.circle = canvas.create_oval(x - r, y - r, x + r, y + r, 
-                                         fill="gray", 
+                                         fill="#7F7F7F", 
                                          outline="")
         self._drag_data = {"x": 0, "y": 0}
 
@@ -28,27 +28,28 @@ class Moon:
         self._drag_data["x"] = event.x
         self._drag_data["y"] = event.y
 
-        # Update background based on proximity to Sun
+        # Update background and moon color based on proximity to Sun
         self.update_background()
 
     def update_background(self):
-        # Get Moon center position
         coords = self.canvas.coords(self.circle)
         mx = (coords[0] + coords[2]) / 2
         my = (coords[1] + coords[3]) / 2
 
-        # Get Sun center position
         sx, sy = self.sun.center()
 
-        # Calculate distance
         dist = math.sqrt((mx - sx)**2 + (my - sy)**2)
 
-        # Map distance to brightness (closer = brighter)
         max_dist = 400
-        brightness = max(0, min(255, int((dist / max_dist) * 255)))
-        color = f'#{brightness:02x}{brightness:02x}{brightness:02x}'  # grayscale
 
-        self.canvas.configure(bg=color)
+        bg_brightness = max(0, min(255, int((dist / max_dist) * 255)))
+        bg_color = f'#{bg_brightness:02x}{bg_brightness:02x}{bg_brightness:02x}'
+
+        moon_brightness = max(0, min(255, int((dist / max_dist) * 230)))
+        moon_color = f'#{moon_brightness:02x}{moon_brightness:02x}{moon_brightness:02x}'
+
+        self.canvas.configure(bg=bg_color)
+        self.canvas.itemconfig(self.circle, fill=moon_color)
 
 class Sun:
     def __init__(self, canvas, x, y, r):
@@ -77,6 +78,6 @@ canvas.pack()
 sun = Sun(canvas, W/2, H/2, 100)
 
 # Create Moon
-moon = Moon(canvas, 150, 150, 100, sun)
+moon = Moon(canvas, 150, 150, 99, sun)
 
 root.mainloop()

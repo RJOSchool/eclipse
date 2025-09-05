@@ -43,11 +43,14 @@ class Moon:
         max_dist = 400
 
         bg_brightness = max(0, min(255, int((dist / max_dist) * 255)))
-        bg_color = f'#{bg_brightness:02x}{bg_brightness:02x}{bg_brightness:02x}'
+        sky_color = int(bg_brightness * 1.3)
+        sky_color = max(0, min(255, sky_color))  # clamp to 0-255
+
+        bg_color = f'#{bg_brightness:02x}{bg_brightness:02x}{sky_color:02x}'
 
         moon_brightness = max(0, min(255, int((dist / max_dist) * 230)))
         moon_color = f'#{moon_brightness:02x}{moon_brightness:02x}{moon_brightness:02x}'
-
+        
         self.canvas.configure(bg=bg_color)
         self.canvas.itemconfig(self.circle, fill=moon_color)
 
@@ -71,7 +74,7 @@ root.title("Sun and Moon Proximity")
 W = 600
 H = 600
 canvas = tk.Canvas(root, width=W, height=H, 
-                   bg="white")
+                   bg="#8787af")
 canvas.pack()
 
 # Create Sun in center

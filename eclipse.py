@@ -31,6 +31,9 @@ class Moon:
         # Update background and moon color based on proximity to Sun
         self.update_background()
 
+        # for distance calculation
+        self.calculate_distance_to_sun()
+
     def calculate_distance_to_sun(self):
         coords = self.canvas.coords(self.circle)
         mx = (coords[0] + coords[2]) / 2
@@ -49,7 +52,7 @@ class Moon:
 
         eclipsep = math.floor((300 - distance) / 300 * 100)
 
-
+        print(eclipsep) #for testing purposes, delete on use!!!!!!!!!!
         return distance, (mx, my)
         
     def update_background(self):

@@ -40,6 +40,19 @@ class Moon:
 
         dist = math.sqrt((mx - sx)**2 + (my - sy)**2)
 
+        #calculating distance from the sun to the moon
+
+        distance = (((( mx - sx ) ** 2) + (( my - sy ) ** 2)) ** 0.5)
+
+        if distance > 300 :
+            distance = 300 #for percentile purposes, if its above 300 it sets the distance to 300
+        
+        #the percentile of the eclipse itself (rounded down for easier read)
+
+        eclipsep = math.floor((300 - distance) / 300 * 100)
+
+        print(f"{eclipsep} % ")
+
         max_dist = 400
 
         bg_brightness = max(0, min(255, int((dist / max_dist) * 255)))

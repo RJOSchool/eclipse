@@ -2,10 +2,11 @@ import tkinter as tk
 import math
 
 class Moon:
-    def __init__(self, canvas, x, y, r, sun):
+    def __init__(self, canvas, x, y, r, sun, mirror_canvas=None):
         self.canvas = canvas
         self.r = r
         self.sun = sun
+        self.mirror_canvas = mirror_canvas  # <- Store mirror canvas
         self.circle = canvas.create_oval(x - r, y - r, x + r, y + r, 
                                          fill="#7F7F7F", 
                                          outline="")
@@ -77,6 +78,10 @@ class Moon:
         
         self.canvas.configure(bg=bg_color)
         self.canvas.itemconfig(self.circle, fill=moon_color)
+        
+        # Update mirror canvas if provided
+        if self.mirror_canvas:
+            self.mirror_canvas.configure(bg=bg_color)
 
 class Sun:
     def __init__(self, canvas, x, y, r):
@@ -101,10 +106,17 @@ canvas = tk.Canvas(root, width=W, height=H,
                    bg="#8787af")
 canvas.pack()
 
+#brightness test window (to be deleted on use)
+testwindow = tk.Tk()
+testwindow.title("brightness test")
+canvas2 = tk.Canvas(testwindow, width = W, height = H,
+                    bg="#8787af")
+canvas2.pack()
+
 # Create Sun in center
 sun = Sun(canvas, W/2, H/2, 100)
 
 # Create Moon
-moon = Moon(canvas, 150, 150, 99, sun)
+moon = Moon(canvas, 150, 150, 99, sun, mirror_canvas=canvas2) #delete the mirror_canvas later on use
 
 root.mainloop()

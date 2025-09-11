@@ -11,7 +11,7 @@ class Moon:
                                          fill="#7F7F7F", 
                                          outline="")
         self._drag_data = {"x": 0, "y": 0}
-
+        self.eclipsenum = None
         # Bind events
         canvas.tag_bind(self.circle, "<ButtonPress-1>", self.on_press)
         canvas.tag_bind(self.circle, "<B1-Motion>", self.on_drag)
@@ -50,9 +50,12 @@ class Moon:
             distance = 300 #for percentile purposes, if its above 300 it sets the distance to 300
         
         #the percentile of the eclipse itself (rounded down for easier read)
-
         eclipsep = math.floor((300 - distance) / 300 * 100)
 
+        if self.eclipsenum is not None:
+            self.mirror_canvas.delete(self.eclipsenum)
+        self.eclipsenum = self.mirror_canvas.create_text(150, 100, text=f"{eclipsep}", font=("Arial", 20), fill="blue")
+        
         print(eclipsep) #for testing purposes, delete on use!!!!!!!!!!
         return distance, (mx, my)
         

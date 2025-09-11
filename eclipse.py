@@ -54,7 +54,7 @@ class Moon:
 
         if self.eclipsenum is not None:
             self.mirror_canvas.delete(self.eclipsenum)
-        self.eclipsenum = self.mirror_canvas.create_text(150, 100, text=f"{eclipsep}", font=("Arial", 20), fill="blue")
+        self.eclipsenum = self.mirror_canvas.create_text(23, 20, text=f"{eclipsep} %", font=("Arial", 20), fill="blue")
         
         print(eclipsep) #for testing purposes, delete on use!!!!!!!!!!
         return distance, (mx, my)
